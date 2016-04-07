@@ -49,7 +49,6 @@ public class Router {
             e.printStackTrace();
             return "failure";
         }
-
     }
 
     @RequestMapping(value = "/uuid")
