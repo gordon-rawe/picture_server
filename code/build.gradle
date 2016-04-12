@@ -26,6 +26,7 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile('org.im4java:im4java:1.4.0')
     testCompile("junit:junit")
 }
 

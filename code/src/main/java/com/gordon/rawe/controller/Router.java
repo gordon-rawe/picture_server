@@ -2,21 +2,20 @@ package com.gordon.rawe.controller;
 
 import com.gordon.rawe.Application;
 import com.gordon.rawe.utils.FileUtils;
+import com.gordon.rawe.utils.ImageHandler;
 import com.gordon.rawe.utils.UUIDUtils;
+import org.im4java.core.IM4JavaException;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
-import java.util.UUID;
 
 /**
  * Created by gordon on 16/4/5.
@@ -34,16 +33,29 @@ public class Router {
 
     @RequestMapping(method = RequestMethod.POST, value = "/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-        String hashString = UUIDUtils.getUUID();
+        final String hashString = UUIDUtils.getUUID();
         try {
-            BufferedOutputStream stream_200_200 = new BufferedOutputStream(
-                    new FileOutputStream(FileUtils.getFileFromDisk("200_200", hashString)));
-            BufferedOutputStream stream_400_400 = new BufferedOutputStream(
-                    new FileOutputStream(FileUtils.getFileFromDisk("400_400", hashString)));
-            FileCopyUtils.copy(file.getInputStream(), stream_200_200);
-            FileCopyUtils.copy(file.getInputStream(), stream_400_400);
-            stream_200_200.close();
-            stream_200_200.close();
+            BufferedOutputStream originalStream = new BufferedOutputStream(
+                    new FileOutputStream(FileUtils.getFileFromDisk("original", hashString)));
+            FileCopyUtils.copy(file.getInputStream(), originalStream);
+            originalStream.close();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        ImageHandler.resizeImage(FileUtils.getDirName("original", hashString),
+                                FileUtils.getDirName("200_200", hashString), 200, 200);
+                        ImageHandler.resizeImage(FileUtils.getDirName("original", hashString),
+                                FileUtils.getDirName("400_400", hashString), 400, 400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (IM4JavaException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
             return hashString;
         } catch (IOException e) {
             e.printStackTrace();
