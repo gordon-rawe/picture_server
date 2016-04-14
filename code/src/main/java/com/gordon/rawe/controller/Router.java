@@ -43,10 +43,14 @@ public class Router {
                 @Override
                 public void run() {
                     try {
-                        ImageHandler.resizeImage(FileUtils.getDirName("original", hashString),
-                                FileUtils.getDirName("200_200", hashString), 200, 200);
-                        ImageHandler.resizeImage(FileUtils.getDirName("original", hashString),
-                                FileUtils.getDirName("400_400", hashString), 400, 400);
+                        String originalFile = FileUtils.getDirName("original", hashString);
+                        int[] originalSize = ImageHandler.getImageInfo(originalFile);
+                        ImageHandler.resizeImage(originalFile,
+                                FileUtils.getDirName("200_200", hashString), 200, 200
+                                , originalSize[0], originalSize[1]);
+                        ImageHandler.resizeImage(originalFile,
+                                FileUtils.getDirName("400_400", hashString), 1000, 1000,
+                                originalSize[0], originalSize[1]);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

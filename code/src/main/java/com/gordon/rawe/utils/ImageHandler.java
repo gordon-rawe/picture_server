@@ -5,9 +5,7 @@ import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
 import org.im4java.core.IdentifyCmd;
 import org.im4java.process.ArrayListOutputConsumer;
-import org.im4java.process.StandardStream;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,11 +13,46 @@ import java.util.ArrayList;
  * Created by gordon on 16/4/7.
  */
 public class ImageHandler {
-    public static void resizeImage(String src, String dest, int width, int height) throws InterruptedException, IOException, IM4JavaException {
-        ConvertCmd cmd = new ConvertCmd();//true for graphics magick
+    final static int RATIO_W = 1;
+    final static int RATIO_H = 2;
+
+    final static int TYPE_ONE = 1001;//ALL LARGER
+    final static int TYPE_TWO = 1002;//WIDTH LARGER HEIGHT SMALLER
+    final static int TYPE_THREE = 1003;//HEIGHT LARGER WIDTH SMALLER
+    final static int TYPE_FOUR = 1004;//ALL SMALLER
+
+
+    public static void resizeImage(String src, String dest,
+                                   int width, int height, int srcWidth, int srcHeight)
+            throws InterruptedException, IOException, IM4JavaException {
+        ConvertCmd cmd = new ConvertCmd(true);//true for graphics magick
         IMOperation op = new IMOperation();
         op.addImage(src);
-        op.resize(width, height);
+        int TYPE_SCALE = srcWidth > width ? srcHeight > height ? TYPE_ONE : TYPE_TWO :
+                srcHeight > height ? TYPE_THREE : TYPE_FOUR;
+        int RATIO_TYPE = srcWidth * 1f / srcHeight > width * 1f / height ?
+                RATIO_W : RATIO_H;
+        switch (TYPE_SCALE) {
+            case TYPE_ONE:
+                if (RATIO_TYPE == RATIO_W) {
+                    int diff_x = srcHeight * width / height;
+                    op.crop(srcWidth - diff_x, srcHeight, diff_x / 2, 0);
+                } else {
+                    int diff_y = srcWidth * height / width;
+                    op.crop(srcWidth, srcHeight - diff_y, 0, diff_y / 2);
+                }
+                op.resize(width, height);
+                break;
+            case TYPE_TWO:
+                break;
+            case TYPE_THREE:
+                break;
+            case TYPE_FOUR:
+                op.background("white");
+                op.gravity("center");
+                op.extent(width,height);
+                break;
+        }
         op.addImage(dest);
         cmd.setSearchPath("/usr/local/bin/");
         cmd.run(op);
@@ -33,7 +66,7 @@ public class ImageHandler {
 //            op.format("width:%w,height:%h,path:%d%f,size:%b%[EXIF:DateTimeOriginal]");
             op.format("%w,%h");
             op.addImage(1);
-            IdentifyCmd identifyCmd = new IdentifyCmd();
+            IdentifyCmd identifyCmd = new IdentifyCmd(true);
             ArrayListOutputConsumer output = new ArrayListOutputConsumer();
             identifyCmd.setOutputConsumer(output);
             identifyCmd.setSearchPath("/usr/local/bin/");
