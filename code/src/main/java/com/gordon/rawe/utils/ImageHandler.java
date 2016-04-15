@@ -35,22 +35,25 @@ public class ImageHandler {
         switch (TYPE_SCALE) {
             case TYPE_ONE:
                 if (RATIO_TYPE == RATIO_W) {
-                    int diff_x = srcHeight * width / height;
+                    int diff_x = srcWidth - srcHeight * width / height;
                     op.crop(srcWidth - diff_x, srcHeight, diff_x / 2, 0);
                 } else {
-                    int diff_y = srcWidth * height / width;
+                    int diff_y = srcHeight - srcWidth * height / width;
                     op.crop(srcWidth, srcHeight - diff_y, 0, diff_y / 2);
                 }
                 op.resize(width, height);
                 break;
             case TYPE_TWO:
-                break;
             case TYPE_THREE:
+                op.resize(width, height);
+                op.background("white");
+                op.gravity("center");
+                op.extent(width, height);
                 break;
             case TYPE_FOUR:
                 op.background("white");
                 op.gravity("center");
-                op.extent(width,height);
+                op.extent(width, height);
                 break;
         }
         op.addImage(dest);

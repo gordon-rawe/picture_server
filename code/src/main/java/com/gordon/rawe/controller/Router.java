@@ -49,7 +49,7 @@ public class Router {
                                 FileUtils.getDirName("200_200", hashString), 200, 200
                                 , originalSize[0], originalSize[1]);
                         ImageHandler.resizeImage(originalFile,
-                                FileUtils.getDirName("400_400", hashString), 1000, 1000,
+                                FileUtils.getDirName("400_400", hashString), 600, 600,
                                 originalSize[0], originalSize[1]);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
