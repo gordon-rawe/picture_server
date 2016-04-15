@@ -1,9 +1,11 @@
 package com.gordon.rawe.controller;
 
+import com.gordon.rawe.settings.Config;
 import com.gordon.rawe.utils.FileUtils;
 import com.gordon.rawe.utils.ImageHandler;
 import com.gordon.rawe.utils.UUIDUtils;
 import org.im4java.core.IM4JavaException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import java.io.*;
  */
 @RestController
 public class Router {
+    @Autowired
+    Config config;
 
     @RequestMapping(value = "/fetch", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<InputStreamResource> serveImages(
@@ -69,5 +73,15 @@ public class Router {
     @RequestMapping(value = "/uuid")
     public String getUUID() {
         return UUIDUtils.getUUID();
+    }
+
+    @RequestMapping(value = "/path")
+    public String getPath() {
+        return config.getPictureAbsoluteDir();
+    }
+
+    @RequestMapping(value = "/port")
+    public int getPort() {
+        return config.getPort();
     }
 }
