@@ -1,6 +1,5 @@
 package com.gordon.rawe.controller;
 
-import com.gordon.rawe.Application;
 import com.gordon.rawe.utils.FileUtils;
 import com.gordon.rawe.utils.ImageHandler;
 import com.gordon.rawe.utils.UUIDUtils;
