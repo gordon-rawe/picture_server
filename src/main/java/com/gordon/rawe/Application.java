@@ -32,7 +32,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
 
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
-//        container.setPort(config.getPort());
+        // container.setPort(config.getPort());
         // FIXME: 16/4/16 THIS FUNCTION IS USED FOR DEBUGGING...
     }
 

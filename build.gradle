@@ -13,8 +13,8 @@ apply plugin: 'spring-boot'
 apply plugin: 'war'
 
 jar {
-    baseName = 'picture service'
-    version =  '0.1.0'
+    baseName = "gordon's picture service"
+    version =  '0.1.0-beta'
 }
 
 repositories {
