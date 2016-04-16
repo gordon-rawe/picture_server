@@ -10,6 +10,15 @@ public class Config {
     private int port;
     private String pictureAbsoluteDir;
     private String gmPath;
+    private String[] sizes;
+
+    public String[] getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(String[] sizes) {
+        this.sizes = sizes;
+    }
 
     public String getGmPath() {
         return gmPath;

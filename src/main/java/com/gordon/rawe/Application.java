@@ -33,7 +33,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
 
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
-        // container.setPort(config.getPort());
+        container.setPort(config.getPort());
         // FIXME: 16/4/16 THIS FUNCTION IS USED FOR DEBUGGING...
     }
 
@@ -42,13 +42,19 @@ public class Application extends SpringBootServletInitializer implements Embedde
         Application.PICTURE_ABSOLUTE_DIR = config.getPictureAbsoluteDir();
         Application.GRAPHICS_MAGICK_PATH = config.getGmPath();
         //如果没有,创建文件夹在相应的目录
-        String[] dirsToCreate = new String[]{Application.PICTURE_ABSOLUTE_DIR + "original",
-                Application.PICTURE_ABSOLUTE_DIR + "200_200",
-                Application.PICTURE_ABSOLUTE_DIR + "400_400"};
+        String[] sizes = config.getSizes();
+        String[] dirsToCreate = new String[sizes.length];
+        for (int i = 0; i < dirsToCreate.length; i++) {
+            dirsToCreate[i] = Application.PICTURE_ABSOLUTE_DIR + sizes[i];
+        }
+        File directory = new File(Application.PICTURE_ABSOLUTE_DIR + "original");
+        if (!directory.exists()) {
+            System.out.println("making directory -> " + directory.getAbsolutePath() + " status -> " + directory.mkdirs());
+        }
         for (String dir : dirsToCreate) {
-            File directory = new File(dir);
+            directory = new File(dir);
             if (!directory.exists()) {
-                System.out.println(directory.mkdirs());
+                System.out.println("making directory -> " + directory.getAbsolutePath() + " status -> " + directory.mkdirs());
             }
         }
     }

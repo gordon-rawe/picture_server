@@ -48,12 +48,12 @@ public class Router {
                     try {
                         String originalFile = FileUtils.getDirName("original", hashString);
                         int[] originalSize = ImageHandler.getImageInfo(originalFile);
-                        ImageHandler.resizeImage(originalFile,
-                                FileUtils.getDirName("200_200", hashString), 200, 200
-                                , originalSize[0], originalSize[1]);
-                        ImageHandler.resizeImage(originalFile,
-                                FileUtils.getDirName("400_400", hashString), 600, 600,
-                                originalSize[0], originalSize[1]);
+                        for (String size : config.getSizes()) {
+                            int[] targetSize = FileUtils.parseSize(size);
+                            ImageHandler.resizeImage(originalFile,
+                                    FileUtils.getDirName(size, hashString), targetSize[0], targetSize[1]
+                                    , originalSize[0], originalSize[1]);
+                        }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -88,5 +88,14 @@ public class Router {
     @RequestMapping(value = "/root")
     public String getRootPath() {
         return new File("").getAbsolutePath();
+    }
+
+    @RequestMapping(value = "/sizes")
+    public String getSizes() {
+        String res = "";
+        for (String str : config.getSizes()) {
+            res += str + "\n";
+        }
+        return res;
     }
 }

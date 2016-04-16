@@ -20,4 +20,11 @@ public class FileUtils {
     public static String getDirName(String dimension, String uuid) {
         return Application.PICTURE_ABSOLUTE_DIR + dimension + "/" + uuid + ".jpg";
     }
+
+    public static int[] parseSize(String sizeString) {
+        String[] sizes = new String[2];
+        if (sizeString.contains("_"))
+            sizes = sizeString.split("_");
+        return new int[]{Integer.parseInt(sizes[0]), Integer.parseInt(sizes[1])};
+    }
 }
