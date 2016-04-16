@@ -24,7 +24,7 @@ public class Application implements EmbeddedServletContainerCustomizer, CommandL
 
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
-        container.setPort(config.getPort());
+//        container.setPort(config.getPort());
     }
 
     @Override

@@ -4,3 +4,5 @@ build/
 code.iml
 .idea/
 .gradle/
+picture_server.iml
+.gradle
