@@ -3,6 +3,6 @@ build/
 .gradle
 code.iml
 .idea/
-.gradle/
+.Ds_Store
 picture_server.iml
 .gradle
