@@ -19,8 +19,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
     @Autowired
     Config config;
 
-    public final static String PICTURE_ROOT_DIR = "src/main/resources/dimensions/";
-    public static String PICTURE_ABSOLUTE_DIR = new File("").getAbsolutePath();
+    public static String PICTURE_ABSOLUTE_DIR = "PICTURE_ABSOLUTE_DIR";
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -34,18 +33,21 @@ public class Application extends SpringBootServletInitializer implements Embedde
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
 //        container.setPort(config.getPort());
+        // FIXME: 16/4/16 THIS FUNCTION IS USED FOR DEBUGGING...
     }
 
     @Override
     public void run(String... args) throws Exception {
         Application.PICTURE_ABSOLUTE_DIR = config.getPictureAbsoluteDir();
         //如果没有,创建文件夹在相应的目录
-        String[] dirsToCreate = new String[]{config.getPictureAbsoluteDir() + "original",
-                config.getPictureAbsoluteDir() + "200_200",
-                config.getPictureAbsoluteDir() + "400_400"};
+        String[] dirsToCreate = new String[]{Application.PICTURE_ABSOLUTE_DIR + "original",
+                Application.PICTURE_ABSOLUTE_DIR + "200_200",
+                Application.PICTURE_ABSOLUTE_DIR + "400_400"};
         for (String dir : dirsToCreate) {
             File directory = new File(dir);
-            if (!directory.exists()) directory.mkdir();
+            if (!directory.exists()) {
+                System.out.println(directory.mkdirs());
+            }
         }
     }
 }

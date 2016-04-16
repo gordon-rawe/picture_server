@@ -14,7 +14,7 @@ public class FileUtils {
     Config config;
 
     public static File getFileFromDisk(String dimension, String uuid) {
-        return new File(Application.PICTURE_ROOT_DIR + dimension + "/" + uuid + ".jpg");
+        return new File(Application.PICTURE_ABSOLUTE_DIR + dimension + "/" + uuid + ".jpg");
     }
 
     public static String getDirName(String dimension, String uuid) {
