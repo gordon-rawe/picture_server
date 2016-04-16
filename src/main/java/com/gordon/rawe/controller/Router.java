@@ -84,4 +84,9 @@ public class Router {
     public int getPort() {
         return config.getPort();
     }
+
+    @RequestMapping(value = "/root")
+    public String getRootPath() {
+        return new File("").getAbsolutePath();
+    }
 }
