@@ -9,6 +9,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class Config {
     private int port;
     private String pictureAbsoluteDir;
+    private String gmPath;
+
+    public String getGmPath() {
+        return gmPath;
+    }
+
+    public void setGmPath(String gmPath) {
+        this.gmPath = gmPath;
+    }
 
     public int getPort() {
         return port;

@@ -1,10 +1,13 @@
 package com.gordon.rawe.utils;
 
+import com.gordon.rawe.Application;
+import com.gordon.rawe.settings.Config;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
 import org.im4java.core.IdentifyCmd;
 import org.im4java.process.ArrayListOutputConsumer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ public class ImageHandler {
                 break;
         }
         op.addImage(dest);
-        cmd.setSearchPath("/usr/local/bin/");
+        cmd.setSearchPath(Application.GRAPHICS_MAGICK_PATH);
         cmd.run(op);
         System.out.println(getImageInfo(src));
     }
@@ -72,7 +75,7 @@ public class ImageHandler {
             IdentifyCmd identifyCmd = new IdentifyCmd(true);
             ArrayListOutputConsumer output = new ArrayListOutputConsumer();
             identifyCmd.setOutputConsumer(output);
-            identifyCmd.setSearchPath("/usr/local/bin/");
+            identifyCmd.setSearchPath(Application.GRAPHICS_MAGICK_PATH);
             identifyCmd.run(op, imagePath);
             ArrayList<String> cmdOutput = output.getOutput();
             assert cmdOutput.size() == 1;

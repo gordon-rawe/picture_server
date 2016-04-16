@@ -20,6 +20,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
     Config config;
 
     public static String PICTURE_ABSOLUTE_DIR = "PICTURE_ABSOLUTE_DIR";
+    public static String GRAPHICS_MAGICK_PATH = "/usr/local/bin";
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -39,6 +40,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
     @Override
     public void run(String... args) throws Exception {
         Application.PICTURE_ABSOLUTE_DIR = config.getPictureAbsoluteDir();
+        Application.GRAPHICS_MAGICK_PATH = config.getGmPath();
         //如果没有,创建文件夹在相应的目录
         String[] dirsToCreate = new String[]{Application.PICTURE_ABSOLUTE_DIR + "original",
                 Application.PICTURE_ABSOLUTE_DIR + "200_200",
