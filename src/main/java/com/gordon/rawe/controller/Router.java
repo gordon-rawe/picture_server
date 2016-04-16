@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Arrays;
 
 /**
  * Created by gordon on 16/4/5.
@@ -28,8 +29,10 @@ public class Router {
 
     @RequestMapping(value = "/fetch", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<InputStreamResource> serveImages(
-            @RequestParam(value = "dimension", defaultValue = "200_200") String dimension,
+            @RequestParam(value = "dimension", defaultValue = "original") String dimension,
             @RequestParam(value = "uuid") String uuid) throws FileNotFoundException {
+        String[] sizes = config.getSizes();
+        if (!Arrays.asList(sizes).contains(dimension)) dimension = "original";
         InputStreamResource inputStream = new InputStreamResource(new FileInputStream(FileUtils.getFileFromDisk(dimension, uuid)));
         return ResponseEntity.ok(inputStream);
     }
