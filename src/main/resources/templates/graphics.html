@@ -16,49 +16,9 @@
 </nav>
 <div class="container">
     <div class="row top-10">
-        <div class="col-xs-3 col-md-2">
+        <div th:each="book : ${boys}" class="col-xs-3 col-md-2">
             <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
-            </a>
-        </div>
-        <div class="col-xs-3 col-md-2">
-            <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
-            </a>
-        </div>
-        <div class="col-xs-3 col-md-2">
-            <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
-            </a>
-        </div>
-        <div class="col-xs-3 col-md-2">
-            <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
-            </a>
-        </div>
-        <div class="col-xs-3 col-md-2">
-            <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
-            </a>
-        </div>
-        <div class="col-xs-3 col-md-2">
-            <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
-            </a>
-        </div>
-        <div class="col-xs-3 col-md-2">
-            <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
-            </a>
-        </div>
-        <div class="col-xs-3 col-md-2">
-            <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
-            </a>
-        </div>
-        <div class="col-xs-3 col-md-2">
-            <a href="#" class="thumbnail">
-                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" alt="thumbnail"/>
+                <img th:src="@{/images/789f65e378964eb38a74d677047a37fe.jpg}" th:alt="${book}"/>
             </a>
         </div>
     </div>
