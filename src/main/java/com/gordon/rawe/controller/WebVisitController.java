@@ -21,13 +21,12 @@ public class WebVisitController {
     public String listAllPictures(@RequestParam(value = "dimension", defaultValue = "original") String dimension,
                                   Model model) {
         File rootDir = new File(Application.PICTURE_ABSOLUTE_DIR + "/" + dimension);
-        List<String> urls = Arrays.asList("one", "two", "three");
-//        for (File picture : rootDir.listFiles()) {
-//            urls.add(picture.getName());
-//        }
-        model.addAttribute("name", "gordon");
-        model.addAttribute("boys", urls);
+        List<String> urls = new ArrayList<>();
+        for (File picture : rootDir.listFiles()) {
+            urls.add(Application.PUBLIC_IP + "/graphics/fetch?uuid=" + picture.getName().substring(0, 32));
+        }
+        System.out.println(urls);
+        model.addAttribute("urls", urls);
         return "graphics";
     }
-
 }

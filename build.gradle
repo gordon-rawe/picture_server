@@ -27,6 +27,7 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile('com.alibaba:fastjson:1.2.11')
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     compile('org.im4java:im4java:1.4.0')
 }

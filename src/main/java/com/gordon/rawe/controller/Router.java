@@ -1,5 +1,7 @@
 package com.gordon.rawe.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.gordon.rawe.Application;
 import com.gordon.rawe.settings.Config;
 import com.gordon.rawe.utils.FileUtils;
 import com.gordon.rawe.utils.ImageHandler;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by gordon on 16/4/5.
@@ -100,5 +105,15 @@ public class Router {
             res += str + "\n";
         }
         return res;
+    }
+
+    @RequestMapping("/list")
+    public String listPictures(@RequestParam(value = "dimension", defaultValue = "original") String dimension) {
+        File rootDir = new File(Application.PICTURE_ABSOLUTE_DIR + "/" + dimension);
+        List<String> urls = new ArrayList<>();
+        for (File picture : rootDir.listFiles()) {
+            urls.add(picture.getName().substring(0, 32));
+        }
+        return JSON.toJSONString(urls);
     }
 }

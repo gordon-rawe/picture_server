@@ -19,6 +19,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
     @Autowired
     Config config;
 
+    public static String PUBLIC_IP = "http://139.129.19.93:8080";
     public static String PICTURE_ABSOLUTE_DIR = "PICTURE_ABSOLUTE_DIR";
     public static String GRAPHICS_MAGICK_PATH = "/usr/local/bin";
 
